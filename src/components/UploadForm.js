@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { BACKEND_URI } from "../config/constants";
 
-const UploadForm = ({ getAllMedias }) => {
+const UploadForm = ({ getAllMedias,getProgres1 }) => {
   const [name, setName] = useState("");
   const [videos, setVideos] = useState([]);
-
+  console.log("videos  ", videos)
+  
   const hadleSubmit = (e) => {
     e.preventDefault();
 
@@ -16,8 +17,22 @@ const UploadForm = ({ getAllMedias }) => {
 
     formdata.append("name", name);
 
+    function onUploadProgress(event) {
+      var progressInfosData = Math.round(100 * event.loaded / event.total);
+      console.log(" progressInfosData ", progressInfosData)
+      getProgres1(progressInfosData)
+    }
+
+    const config = {
+      'headers': {
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+      onUploadProgress: onUploadProgress
+    };
+
     axios
-      .post(`${BACKEND_URI}/api/v1/media/create`, formdata)
+      .post(`${BACKEND_URI}/api/v1/media/create`, formdata, config)
       .then((success) => {
         getAllMedias();
         alert("Submitted successfully");
@@ -49,7 +64,6 @@ const UploadForm = ({ getAllMedias }) => {
             id="videos"
             multiple
             className="form-control"
-            accept=".mp4, .mkv"
             onChange={(e) => {
               setVideos(e.target.files);
             }}

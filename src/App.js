@@ -4,9 +4,10 @@ import axios from "axios";
 import UploadForm from "./components/UploadForm";
 import Thumbnail from "./components/Thumbnail";
 import Progress from "./components/Progress";
-import DropZone from "./components/DropZone";
 import { BACKEND_URI } from "./config/constants";
 import { VideoJS } from "./components/VideoJS";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {Player} from "./components/video/Player";
 
 // import VideoJS from "./components/Video";
 
@@ -31,114 +32,94 @@ const App = () => {
                 alert("Error happened!");
             });
     };
-    function getProgres(e) {
-        setProgress(e)
-    }
 
-    const videoJsOptions = {
-        autoplay: true,
-        controls: true,
-        responsive: true,
-        fluid: true,
-        sources: [{
-            src: '/back.mp4',
-            type: 'video/mp4'
-        }]
-    };
+    
 
+    
+    // return (
+    //     <>
+    //         <div className="row">
+    //             <div id="myModal">
 
-    const handlePlayerReady = (player) => {
-        playerRef.current = player;
+    //             </div>
+    //             <div className="col-md-12">
+    //                 <div className="card" >
+    //                     <div className="card-body"
+    //                     style={{
+    //                         height: "auto",
+    //                         width: "800px",
+    //                         margin: "40px",
+    //                         border: "1px solid black",
+    //                     }}
+    //                     >
+    //                         <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+    //                     </div>
+    //                 </div>
+    //             </div>
 
-        // You can handle player events here, for example:
-        player.on('waiting', () => {
-            // videojs.log('player is waiting');
-        });
+    //             <div className="col-md-12">
+    //                 <div
+    //                     className="card"
+    //                     style={{
+    //                         height: "auto",
+    //                         width: "800px",
+    //                         margin: "40px",
+    //                         border: "1px solid black",
+    //                     }}
+    //                 >
+    //                     <div className="card-body">
+    //                         <Progress percentage={progressPercentage} />
+    //                     </div>
+    //                     <div className="card-body">
+    //                         <UploadForm getAllMedias={getAllMedias} getProgres1={getProgres} />
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div className="col-md-12">
+    //                 <div
+    //                     className="card"
+    //                     style={{
+    //                         height: "auto",
+    //                         width: "800px",
+    //                         margin: "40px"
+    //                     }}
+    //                 >
 
-        player.on('dispose', () => {
-            // videojs.log('player will dispose');
-        });
-    };
-    useEffect(()=>{
-         const handlePlayerReady = (player) => {
-            playerRef.current = player;
-            console.log(  player,"player111")
-         }
-      
-    },[ playerRef.current])
+    //                     <div className="card-body">
+    //                         <DropZone getAllMedias={getAllMedias} getProgres1={getProgres} />
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             {/* <div className="col-md-12">
+    //                 <div
+    //                     className="card"
+    //                     style={{
+    //                         height: "auto",
+    //                         width: "800px",
+    //                         margin: "40px",
+    //                         border: "1px solid black",
+    //                     }}
+    //                 >
+    //                     <div className="card-body">
+    //                         <Thumbnail />
+    //                     </div>
+
+    //                 </div>
+    //             </div> */}
+    //         </div>
+    //     </>
+    // );
+
     return (
-        <>
-            <div className="row">
-                <div id="myModal">
-
-                </div>
-                <div className="col-md-12">
-                    <div className="card" >
-                        <div className="card-body"
-                        style={{
-                            height: "auto",
-                            width: "800px",
-                            margin: "40px",
-                            border: "1px solid black",
-                        }}
-                        >
-                            <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-md-12">
-                    <div
-                        className="card"
-                        style={{
-                            height: "auto",
-                            width: "800px",
-                            margin: "40px",
-                            border: "1px solid black",
-                        }}
-                    >
-                        <div className="card-body">
-                            <Progress percentage={progressPercentage} />
-                        </div>
-                        <div className="card-body">
-                            <UploadForm getAllMedias={getAllMedias} getProgres1={getProgres} />
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-12">
-                    <div
-                        className="card"
-                        style={{
-                            height: "auto",
-                            width: "800px",
-                            margin: "40px"
-                        }}
-                    >
-
-                        <div className="card-body">
-                            <DropZone getAllMedias={getAllMedias} getProgres1={getProgres} />
-                        </div>
-                    </div>
-                </div>
-                {/* <div className="col-md-12">
-                    <div
-                        className="card"
-                        style={{
-                            height: "auto",
-                            width: "800px",
-                            margin: "40px",
-                            border: "1px solid black",
-                        }}
-                    >
-                        <div className="card-body">
-                            <Thumbnail />
-                        </div>
-
-                    </div>
-                </div> */}
-            </div>
-        </>
-    );
+        <Router>
+           
+            <Routes>
+                <Route path="/" element={<UploadForm   />} />
+                <Route path="/video-js" element={<VideoJS />} />
+                <Route path="/player" element={<Player />} />
+            </Routes>
+        </Router>
+    )
 };
 
 export default App;

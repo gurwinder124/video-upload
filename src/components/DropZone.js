@@ -3,11 +3,11 @@ import { useDropzone } from 'react-dropzone'
 import axios from "axios";
 import { BACKEND_URI } from "../config/constants";
 
-function DropZone({ getAllMedias,getProgres1 }) {
-    const onDrop = useCallback(acceptedFiles => {
-        console.log("test")
+function DropZone({ getProgres1 }) {
+  const onDrop = useCallback(acceptedFiles => {
+    console.log("test")
 
-        let formdata = new FormData();
+    let formdata = new FormData();
     for (let key in acceptedFiles) {
       formdata.append("videos", acceptedFiles[key]);
     }
@@ -31,27 +31,27 @@ function DropZone({ getAllMedias,getProgres1 }) {
     axios
       .post(`${BACKEND_URI}/api/v1/media/create`, formdata, config)
       .then((success) => {
-        getAllMedias();
-        alert("Submitted successfully");
+        // getAllMedias();
+        // alert("Submitted successfully");
       })
       .catch((error) => {
         console.log(error);
         alert("Error happened!");
       });
 
-    }, [])
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  }, [])
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
-    return (
-        <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            {
-                isDragActive ?
-                    <p>Drop the files here ...</p> :
-                    <p>Drag 'n' drop some files here, or click to select files</p>
-            }
-        </div>
-    )
+  return (
+    <div {...getRootProps()}>
+      <input {...getInputProps()} />
+      {
+        isDragActive ?
+          <p>Drop the files here ...</p> :
+          <p>Drag 'n' drop some files here, or click to select files</p>
+      }
+    </div>
+  )
 }
 
 export default DropZone;

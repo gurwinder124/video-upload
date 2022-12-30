@@ -6,6 +6,9 @@ export const Player = () => {
     let [watchComplete, setWatchComplete] = useState(false)
     let handleWatch = (state) => {
         console.log(state.playedSeconds)
+        if( state.playedSeconds > 3 && state.playedSeconds < 6){
+
+        }
     }
     return (
         <div className="col-md-12">
@@ -19,7 +22,7 @@ export const Player = () => {
                     }}
                     >
                     <ResponsivePlayer 
-                        url="http://localhost:3000/back.mp4" 
+                        url="http://localhost:3000/big_buck_bunny.mp4" 
                         onProgress={handleWatch}
                     />
                 </div>

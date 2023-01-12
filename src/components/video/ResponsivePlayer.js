@@ -13,6 +13,7 @@ const ResponsivePlayer = ({url, onProgress, isPlaying}) => {
                 controls={true}
                 onProgress={onProgress}
                 playing={isPlaying}
+                controlsList="nodownload"
             />
         </div>
     )

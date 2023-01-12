@@ -35,7 +35,6 @@ const App = () => {
 
     return (
         <Router>
-           
             <Routes>
                 <Route path="/" element={<UploadForm   />} />
                 <Route path="/thumbnail" element={<Thumbnail />} />
